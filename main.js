@@ -4,14 +4,19 @@ const {app, BrowserWindow} = require('electron')
 var config = require('./config.json');
 
 var vk_token = config.vk
+var myvk = config.myvk
 
-const { VK } = require('vk-io');
+const { VK, Request } = require('vk-io');
 
 const vk = new VK();
+const a = new VK();
+
+a.setOptions({
+	token: myvk
+});
 
 vk.setOptions({
 	token: vk_token,
-	apiMode: 'parallel_selected',
 	webhookPath: '/webhook/secret-path'
 });
 
@@ -31,7 +36,36 @@ vk_app.use(async (context, next) => {
 });
 
 vk_app.on('message',(message) => {
-    console.log('Новое сообщение:',message.text);
+    console.log(message);
+    var user_id = message.peerId
+    a.api.users.get({
+      user_ids: user_id,
+      fields: 'photo_100,followers_count,sex'
+    }).then((res) => {
+      var first_name = res[0].first_name,
+          last_name = res[0].last_name,
+          photo = res[0].photo_100,
+          sex = res[0].sex,
+          followers_count = res[0].followers_count;
+      if(sex = 1){
+        sex = "женский"
+      }else{
+        sex = "мужской"
+      }
+      console.log(first_name + " " + last_name + " " + photo + " " + sex + " " + followers_count);
+    })
+    a.api.wall.get({
+      owner_id: user_id
+    }).then((items) => {
+        console.log('Записей на стене:',items.count);
+    }).catch((error) => {
+        console.error(error);
+    });
+    a.api.friends.get({
+      user_id: user_id
+    }).then((res) => {
+      console.log('Количество друзей: ' + res.count);
+    })
 });
 
 async function run() {
