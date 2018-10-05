@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "express": "^4.16.3",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "vk-io": "^4.0.0-rc.5"
   }
 }
