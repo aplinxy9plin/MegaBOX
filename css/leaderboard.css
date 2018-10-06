@@ -48,7 +48,7 @@ h2.sub.header {
 .card-info {
   position: relative;
   background: #2c3e50;
-  color: #32465a;
+  color: #f5f5f5;
   text-align: center;
 }
 .card-info h2.sub.header {
@@ -124,12 +124,10 @@ h2.sub.header {
 }
 
 .statistics {
-  display: flex;
   justify-content: center;
 }
 .statistics .statistic {
   padding: 0px 20px;
-  min-width: 120px;
 }
 .statistics .statistic:not(:last-child) {
   box-shadow: 20px 0px 0px -19px rgba(255, 255, 255, 0.2);

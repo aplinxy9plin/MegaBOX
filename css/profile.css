@@ -416,8 +416,7 @@ img {
 
 @media screen and (min-width: 640px) {
   .container-fluid {
-    padding-left: 15.5%;
-    padding-right: 5.5%;
+    padding: 0 12.5%;
   }
   .btn-primary {
     clear: none;
