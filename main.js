@@ -113,7 +113,7 @@ function createWindow () {
        minWidth: 561
      })
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('login_page.html')
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
