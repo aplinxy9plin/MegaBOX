@@ -1,7 +1,13 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 
+const Telegraf = require('telegraf')
+const { Extra, Markup } = require('telegraf')
+
+
 var config = require('./config.json');
+
+const tg = new Telegraf(config.tg)
 
 var vk_token = config.vk
 var myvk = config.myvk
@@ -14,6 +20,17 @@ const a = new VK();
 a.setOptions({
 	token: myvk
 });
+
+tg.on('text', (ctx) => {
+  var message = ctx.update.message.text,
+      first_name = ctx.from.first_name,
+      last_name = ctx.from.last_name,
+      username = ctx.from.username;
+  console.log(ctx.from);
+  console.log(message);
+})
+
+tg.startPolling()
 
 vk.setOptions({
 	token: vk_token,
