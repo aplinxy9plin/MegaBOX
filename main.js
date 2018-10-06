@@ -110,7 +110,7 @@ function createWindow () {
        height: 600,
        width: 800,
        minHeight: 610,
-       minWidth: 561
+       minWidth: 736
      })
   // and load the index.html of the app.
   mainWindow.loadFile('login_page.html')
