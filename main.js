@@ -26,6 +26,8 @@ tg.on('text', (ctx) => {
       first_name = ctx.from.first_name,
       last_name = ctx.from.last_name,
       username = ctx.from.username;
+  // получить аналитику текста
+  text_anal ({'documents': [{'id':'1','text': message}]});
   console.log(ctx.from);
   console.log(message);
 })
@@ -54,6 +56,8 @@ vk_app.use(async (context, next) => {
 
 vk_app.on('message',(message) => {
     console.log(message);
+    // получить аналитику текста
+    text_anal ({'documents': [{'id':'1','text': message.text}]});
     var user_id = message.peerId
     a.api.users.get({
       user_ids: user_id,
@@ -99,6 +103,44 @@ async function run() {
 
 run().catch(console.error);
 
+let https = require ('https');
+
+let accessKey = 'b0be0f5ba26c4062b7158f07cad16e7e';
+
+let uri = 'southcentralus.api.cognitive.microsoft.com';
+let path = '/text/analytics/v2.0/';
+
+let response_handler = function (response) {
+    let body = '';
+    response.on ('data', function (d) {
+        body += d;
+    });
+    response.on ('end', function () {
+        let body_ = JSON.parse (body);
+        let body__ = JSON.stringify (body_, null, '  ');
+        console.log (body__);
+    });
+    response.on ('error', function (e) {
+        console.log ('Error: ' + e.message);
+    });
+};
+
+let text_anal = function (documents) {
+    let body = JSON.stringify (documents);
+
+    let request_params = {
+        method : 'POST',
+        hostname : uri,
+        path : path + 'sentiment',
+        headers : {
+            'Ocp-Apim-Subscription-Key' : accessKey,
+        }
+    };
+
+    let req = https.request (request_params, response_handler);
+    req.write (body);
+    req.end ();
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
