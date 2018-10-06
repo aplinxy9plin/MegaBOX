@@ -56,7 +56,7 @@ body {
   }
 }
 #frame #sidepanel #profile.expanded .wrap {
-  height: 210px;
+  height: 300px;
   line-height: initial;
 }
 #frame #sidepanel #profile.expanded .wrap p {
@@ -261,7 +261,7 @@ body {
   border: 1px solid #95a5a6;
 }
 #frame #sidepanel #profile .wrap #expanded {
-  padding: 100px 0 0 0;
+  padding: 80px 0 0 0;
   display: block;
   line-height: initial !important;
 }
@@ -292,7 +292,7 @@ body {
 }
 
 #frame #sidepanel #contacts {
-  height: calc(100% - 177px);
+  height: calc(100% - 100px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -307,7 +307,7 @@ body {
   }
 }
 #frame #sidepanel #contacts.expanded {
-  height: calc(100% - 334px);
+  height: calc(100% - 180px);
 }
 #frame #sidepanel #contacts::-webkit-scrollbar {
   width: 8px;
@@ -411,14 +411,13 @@ body {
   opacity: 0.5;
 }
 #frame #sidepanel #bottom-bar {
-  position: absolute;
   width: 100%;
-  bottom: 0;
+
 }
 #frame #sidepanel #bottom-bar button {
   float: left;
   border: none;
-  width: 50%;
+  width: 100%;
   padding: 10px 0;
   background: #32465a;
   color: #f5f5f5;
@@ -483,7 +482,7 @@ body {
 #frame .content .contact-profile {
   width: 100%;
   height: 60px;
-  line-height: 60px;
+  line-height: 29px;
   background: #f5f5f5;
 }
 #frame .content .contact-profile img {
@@ -496,6 +495,7 @@ body {
   float: left;
 }
 #frame .content .contact-profile .social-media {
+  margin-top: 2%;
   float: right;
 }
 #frame .content .contact-profile .social-media i {
