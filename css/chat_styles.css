@@ -4,7 +4,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   background: #27ae60;
-  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+  font-family: "FontAwesome",  sans-serif;
   font-size: 1em;
   letter-spacing: 0.1px;
   color: #32465a;
@@ -14,12 +14,10 @@ body {
 }
 
 #frame {
-  width: 95%;
+  width: 100%;
   min-width: 360px;
-  max-width: 1000px;
-  height: 92vh;
+  height: 100vh;
   min-height: 300px;
-  max-height: 720px;
   background: #E6EAEA;
 }
 @media screen and (max-width: 360px) {
@@ -426,7 +424,7 @@ body {
   color: #f5f5f5;
   cursor: pointer;
   font-size: 0.85em;
-  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+  font-family: "FontAwesome", sans-serif;
 }
 @media screen and (max-width: 735px) {
   #frame #sidepanel #bottom-bar button {
@@ -583,7 +581,7 @@ body {
   position: relative;
 }
 #frame .content .message-input .wrap input {
-  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+  font-family: "FontAwesome", sans-serif;
   float: left;
   border: none;
   width: calc(100% - 90px);
