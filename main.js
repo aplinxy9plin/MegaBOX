@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, globalShortcut} = require('electron')
 
 const Telegraf = require('telegraf')
 const { Extra, Markup } = require('telegraf')
@@ -130,6 +130,27 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+// const { app, globalShortcut } = require('electron')
+
+app.on('ready', () => {
+  globalShortcut.register('CommandOrControl+1', () => {
+    console.log('CommandOrControl+1 is pressed')
+    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+  })
+  globalShortcut.register('CommandOrControl+2', () => {
+    console.log('CommandOrControl+1 is pressed')
+    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+  })
+  globalShortcut.register('CommandOrControl+3', () => {
+    console.log('CommandOrControl+1 is pressed')
+    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+  })
+  globalShortcut.register('CommandOrControl+4', () => {
+    console.log('CommandOrControl+1 is pressed')
+    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
