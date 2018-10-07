@@ -23,7 +23,7 @@
   <script text="text/javascript">
   var users = []
   var count = 0;
-  var user_id_global = 90327755;
+  user_id = '90327755';
   var tokens = require('./config.json')
   $(document).ready(function () {
     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
@@ -60,7 +60,7 @@
     	$("#status-options").removeClass("active");
     });
 
-    function newMessage() {
+    function newMessage(user_id) {
     	message = $(".message-input input").val();
     	if($.trim(message) == '') {
     		return false;
@@ -79,19 +79,19 @@
           console.log(this.responseText);
         }
       });
-      console.log(user_id_global);
-      xhr.open("GET", "https://api.vk.com/method/messages.send?v=5.37&user_id="+user_id_global+"&access_token="+tokens.vk+"&message="+message);
+      console.log(user_id);
+      xhr.open("GET", "https://api.vk.com/method/messages.send?v=5.37&user_id="+user_id+"&access_token="+tokens.vk+"&message="+message);
 
       xhr.send(data);
     };
 
     $('.submit').click(function() {
-      newMessage();
+      newMessage(user_id);
     });
 
     $(window).on('keydown', function(e) {
       if (e.which == 13) {
-        newMessage();
+        newMessage(user_id);
         return false;
       }
     });
@@ -99,7 +99,7 @@
 });
   function createChat(first_name, last_name, photo, message, user_id){
     // var count += 1;
-    user_id_global = user_id
+    user_id = user_id
     var li = document.createElement('li')
     li.className = "contact"
     li.innerHTML = `<div class="wrap">
@@ -158,15 +158,6 @@
     <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>`
     document.getElementById('messages_ul').appendChild(li)
   }
-  // function createMessage(message){
-  //   var li = document.createElement('li')
-  //   li.className = "sent"
-  //   li.innerHTML = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-  //   <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>`
-  //   document.getElementById('messages_ul').appendChild(li)
-  // }
-
-
   </script>
 </head>
 <body>
