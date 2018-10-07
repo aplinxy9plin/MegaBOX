@@ -94,6 +94,18 @@
 
 $(document).ready(function(){
 
+  $('#css').animate({
+    width: "90%"
+  }, 2000)
+  $('#js').animate({
+    width: "50%"
+  }, 2000)
+  $('#php').animate({
+    width: "80%"
+  }, 2000)
+  $('#git').animate({
+    width: "10%"
+  }, 2000)
 	// Variables
 	var clickedTab = $(".tabs > .active");
 	var tabWrapper = $(".tab__content");
@@ -266,6 +278,7 @@ function demo(){
     }, 500);
   }, 1500);
 }
+
 
 
   </script>
@@ -579,128 +592,48 @@ function demo(){
     		</li>
     		<li>
     			<div class="content__wrapper">
-            <span class="toggler active" data-toggle="grid"><span class="entypo-layout"></span></span>
-<span class="toggler" data-toggle="list"><span class="entypo-list"></span></span>
 
-<ul class="surveys grid">
-  <li class="survey-item">
+            <div>
+              <ul class="progress-bar">
+                <li>
+                  <span style="cursor: pointer">Gremlins vs. Doves: 16.09.2018 - 12.10.2018</span>
+                  <div class="progress-bar">
+                    <div id="css"></div>
+                  </div>
+                </li>
 
-    <span class="survey-country list-only">
-      COX
-    </span>
+                <li>
+                  <span style="cursor: pointer;">Jake Jackson vs. Hannah Dee: 15.09.2019 – 12.12.2018</span>
+                  <div class="progress-bar">
+                    <div id="js"></div>
+                  </div>
+                </li>
 
-    <span class="survey-name">
-      Asset Management
-    </span>
+                <li>
+                  <span style="cursor: pointer">Mike Miller vs. Steven Page: 14.07.2018 – 15.11.2018</span>
+                  <div class="progress-bar">
+                    <div id="php"></div>
+                  </div>
+                </li>
 
-    <span class="survey-country grid-only">
-      COX
-    </span>
-
-    <div class="pull-right">
-
-      <span class="survey-progress">
-        <span class="survey-progress-bg">
-          <span class="survey-progress-fg" style="width: 88%;"></span>
-        </span>
-
-        <span class="survey-progress-labels">
-          <span class="survey-progress-label">
-            88%
-          </span>
-
-          <span class="survey-completes">
-            24 / 30 Days
-          </span>
-        </span>
-      </span>
-
-       <span class="survey-end-date ended">
-        2014 - May 10
-      </span>
-      <span class="survey-stage">
-        <span class="stage draft">Draft</span>
-        <span class="stage awarded">Awarded</span>
-        <span class="stage live">Live</span>
-        <span class="stage ended active">Ended</span>
-      </span>
-    </div>
-  </li>
-  <li class="survey-item">
-    <span class="survey-country list-only">
-      Reliance
-    </span>
-
-    <span class="survey-name">
-      Netvelocity
-    </span>
-
-    <span class="survey-country grid-only">
-      Reliance
-    </span>
-
-    <div class="pull-right">
-
-      <span class="survey-progress">
-        <span class="survey-progress-bg">
-          <span class="survey-progress-fg" style="width: 25%;"></span>
-        </span>
-
-        <span class="survey-progress-labels">
-          <span class="survey-progress-label">
-            25%
-          </span>
-
-          <span class="survey-completes">
-            1 / 7 Days
-          </span>
-        </span>
-      </span>
-
-       <span class="survey-end-date">
-        2014 - July 12
-      </span>
-      <span class="survey-stage">
-        <span class="stage draft">Draft</span>
-        <span class="stage awarded">Awarded</span>
-        <span class="stage live active">Live</span>
-        <span class="stage ended">Ended</span>
-      </span>
-    </div>
-  </li>
-  <li class="survey-item">
-    <span class="survey-country list-only">
-      BTC
-    </span>
-
-    <span class="survey-name">
-      Loyalty Management
-    </span>
-
-    <span class="survey-country grid-only">
-      BTC
-    </span>
-
-    <div class="pull-right">
-      <span class="survey-end-date">
-        2014 - Oct 1
-      </span>
-      <span class="survey-stage">
-        <span class="stage draft">Draft</span>
-        <span class="stage awarded active">Awarded</span>
-        <span class="stage live">Live</span>
-        <span class="stage ended">Ended</span>
-      </span>
-    </div>
-  </li>
-</ul>
-          </div>
+                <li>
+                  <span style="cursor: pointer">Snakes vs. Foxes: 13.06.2018 – 13.10.2018</span>
+                  <div class="progress-bar">
+                    <div id="git"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+        </div>
     		</li>
         <li>
     			<div class="content__wrapper">
 
             	<section class="the-demo">
-            		<div class="example-item">
+            	<table style="width:100%;padding-top:300px">
+                <tbody>
+                <tr>
+                <td><div class="example-item">
             			<div class="lightsaber">
             				<label for="yoda-example"></label>
             				<input type="checkbox" id="yoda-example" checked="checked">
@@ -708,8 +641,8 @@ function demo(){
             				<div class="plasma yoda"></div>
             			</div>
             			<h3>Yoda</h3>
-            		</div>
-            		<div class="example-item">
+            		</div></td>
+                <td><div class="example-item">
             			<div class="lightsaber">
             				<label for="darth-vader-example"></label>
             				<input type="checkbox" id="darth-vader-example" checked="checked">
@@ -717,8 +650,9 @@ function demo(){
             				<div class="plasma vader"></div>
             			</div>
             			<h3>Vader</h3>
-            		</div>
-            		<div class="example-item">
+            		</div></td>
+
+                <td><div class="example-item">
             			<div class="lightsaber">
             				<label for="windu-example"></label>
             				<input type="checkbox" id="windu-example">
@@ -726,8 +660,8 @@ function demo(){
             				<div class="plasma windu"></div>
             			</div>
             			<h3>Windu</h3>
-            		</div>
-            		<div class="example-item clearfix">
+            		</div></td>
+                <td><div class="example-item clearfix">
             			<div class="lightsaber">
             				<label for="obi-wan-example"></label>
             				<input type="checkbox" id="obi-wan-example">
@@ -735,8 +669,10 @@ function demo(){
             				<div class="plasma obi-wan"></div>
             			</div>
             			<h3>Obi</h3>
-            		</div>
-
+            		</div></td>
+                </tr>
+                </tbody>
+                </table>
             	</section>
 
             </div>
