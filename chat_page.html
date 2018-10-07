@@ -22,7 +22,8 @@
 
   <script text="text/javascript">
   var users = []
-  var user_id = 90327755;
+  var count = 0;
+  user_id = '90327755';
   var tokens = require('./config.json')
   $(document).ready(function () {
     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
@@ -59,7 +60,7 @@
     	$("#status-options").removeClass("active");
     });
 
-    function newMessage() {
+    function newMessage(user_id) {
     	message = $(".message-input input").val();
     	if($.trim(message) == '') {
     		return false;
@@ -78,36 +79,77 @@
           console.log(this.responseText);
         }
       });
-
+      console.log(user_id);
       xhr.open("GET", "https://api.vk.com/method/messages.send?v=5.37&user_id="+user_id+"&access_token="+tokens.vk+"&message="+message);
 
       xhr.send(data);
     };
 
     $('.submit').click(function() {
-      newMessage();
+      newMessage(user_id);
     });
 
     $(window).on('keydown', function(e) {
       if (e.which == 13) {
-        newMessage();
+        newMessage(user_id);
         return false;
       }
     });
 
 });
-  function createChat(name, photo, message){
+  function createChat(first_name, last_name, photo, message, user_id){
+    // var count += 1;
+    user_id = user_id
     var li = document.createElement('li')
     li.className = "contact"
     li.innerHTML = `<div class="wrap">
+      <input type="hidden" id="user_id`+count+`" value="`+user_id+`" />
       <span class="contact-status online"></span>
-      <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+      <img src="`+photo+`" alt="" />
       <div class="meta">
-        <p class="name">Louis Litt</p>
-        <p class="preview">You just got LITT up, Mike.</p>
+        <p class="name">`+first_name+` `+last_name+`</p>
+        <p class="preview">`+message+`</p>
       </div>
     </div>`
+    // var profile = document.createElement('div')
+    // profile.className = "contact-profile"
+    // profile.innerHTML =
+    document.getElementById('profile_cont').innerHTML = `<img src="`+photo+`" alt="" />
+          <p id="name">`+first_name+` `+last_name+`</p>
+          <div class="social-media">
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+            <i class="fa fa-twitter" aria-hidden="true"></i>
+             <i class="fa fa-instagram" aria-hidden="true"></i>
+          </div>
+          <div id="account_details">
+        <ul class="customer-action">
+          <li class="my-account">
+            <i class="icon-cog"></i>
+              `+users[6]+` подписчиков
+          </li>
+          <li>
+            <i class="icon-comment top"></i>
+              `+users[5]+` постов
+          </li>
+          <li>
+            <i class="icon-comment top"></i>
+              `+users[6]+` друзей
+          </li>
+          <li>
+            <i class="icon-comment top"></i>
+              `+users[4]+` пол
+          </li>
+        </ul>
+        </div>`
     document.getElementById('chats_ul').appendChild(li)
+
+    var mes = document.createElement('li')
+    mes.className = "replies"
+    mes.innerHTML = `<img src="`+photo+`" alt="" />
+    <p>`+message+`</p>`
+    document.getElementById('messages_ul').appendChild(mes)
+
+    // document.getElementById('messages_ul').appendChild(li)
   }
   function createReply(message){
     var li = document.createElement('li')
@@ -116,15 +158,6 @@
     <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>`
     document.getElementById('messages_ul').appendChild(li)
   }
-  // function createMessage(message){
-  //   var li = document.createElement('li')
-  //   li.className = "sent"
-  //   li.innerHTML = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
-  //   <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>`
-  //   document.getElementById('messages_ul').appendChild(li)
-  // }
-
-
   </script>
 </head>
 <body>
@@ -159,16 +192,6 @@
 		</div>
 		<div id="contacts">
 			<ul id="chats_ul" style="display: initial">
-				<li class="contact">
-					<div class="wrap">
-						<span class="contact-status online"></span>
-						<img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-						<div class="meta">
-							<p class="name">Louis Litt</p>
-							<p class="preview">You just got LITT up, Mike.</p>
-						</div>
-					</div>
-				</li>
 				<!-- <li class="contact active">
 					<div class="wrap">
 						<span class="contact-status busy"></span>
@@ -263,30 +286,8 @@
 		</div>
 	</div>
 	<div class="content">
-		<div class="contact-profile">
-			<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-			<p id="name">Harvey Specter</p>
-			<div class="social-media">
-				<i class="fa fa-facebook" aria-hidden="true"></i>
-				<i class="fa fa-twitter" aria-hidden="true"></i>
-				 <i class="fa fa-instagram" aria-hidden="true"></i>
-			</div>
-      <div id="account_details">
-    <ul class="customer-action">
-      <li class="my-account">
-        <i class="icon-cog"></i>
-          355 followers
-      </li>
-      <li>
-        <i class="icon-comment top"></i>
-          235 friends
-      </li>
-      <li>
-        <i class="icon-question-sign top"></i>
-          Man
-      </li>
-    </ul>
-    </div>
+		<div id="profile_cont" class="contact-profile">
+
 		</div>
 		<div class="messages">
 			<ul id="messages_ul">
@@ -326,7 +327,7 @@
 		</div>
 		<div class="message-input">
 			<div class="wrap">
-			<input style="padding-bottom:25px" type="text" placeholder="Write your message..." />
+			<input id="write_message" style="padding-bottom:25px" type="text" placeholder="Write your message..." />
 			<i class="fa fa-paperclip attachment" aria-hidden="true"></i>
 			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 			</div>
