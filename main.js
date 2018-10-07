@@ -4,6 +4,8 @@ const {app, BrowserWindow, globalShortcut} = require('electron')
 const Telegraf = require('telegraf')
 const { Extra, Markup } = require('telegraf')
 
+var moment = require('moment');
+var now_time = moment("00:00:00", "hh:mm:ss")
 
 var config = require('./config.json');
 
@@ -156,6 +158,19 @@ function createWindow () {
      })
   // and load the index.html of the app.
   mainWindow.loadFile('login_page.html')
+  // let contents = mainWindow.webContents
+  // console.log(contents)
+
+  mainWindow.webContents.on('dom-ready', function(e) {
+    nowURL = mainWindow.webContents.getURL()
+    if(nowURL.indexOf('chat_page.html') !== -1){
+      var timerId = setInterval(function() {
+        timer()
+      }, 1000);
+    }
+  })
+
+  // mainWindow.executeJavaScript(`document.getElementById('timer')`)
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -166,6 +181,21 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+}
+// function timer(){
+//   setTimeout("time", 1000);
+//   console.log(now_time);
+// }
+// function time(){
+//   now_time = moment(now_time).add(1, 'second');
+//   timer()
+// }
+// timer()
+
+function timer(){
+  now_time = moment(now_time).add(1, 'second');
+  mainWindow.webContents.executeJavaScript(`document.getElementById('timer').innerHTML = ` + moment(now_time).format("HH:MM:SS"))
+  console.log(now_time);
 }
 
 // This method will be called when Electron has finished

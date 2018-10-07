@@ -21,6 +21,9 @@
 
 
   <script text="text/javascript">
+  var users = []
+  var user_id = 90327755;
+  var tokens = require('./config.json')
   $(document).ready(function () {
     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
@@ -65,6 +68,20 @@
     	$('.message-input input').val(null);
     	$('.contact.active .preview').html('<span>You: </span>' + message);
     	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+      var data = null;
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+          console.log(this.responseText);
+        }
+      });
+
+      xhr.open("GET", "https://api.vk.com/method/messages.send?v=5.37&user_id="+user_id+"&access_token="+tokens.vk+"&message="+message);
+
+      xhr.send(data);
     };
 
     $('.submit').click(function() {
@@ -79,6 +96,35 @@
     });
 
 });
+  function createChat(name, photo, message){
+    var li = document.createElement('li')
+    li.className = "contact"
+    li.innerHTML = `<div class="wrap">
+      <span class="contact-status online"></span>
+      <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+      <div class="meta">
+        <p class="name">Louis Litt</p>
+        <p class="preview">You just got LITT up, Mike.</p>
+      </div>
+    </div>`
+    document.getElementById('chats_ul').appendChild(li)
+  }
+  function createReply(message){
+    var li = document.createElement('li')
+    li.className = "replies"
+    li.innerHTML = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+    <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>`
+    document.getElementById('messages_ul').appendChild(li)
+  }
+  // function createMessage(message){
+  //   var li = document.createElement('li')
+  //   li.className = "sent"
+  //   li.innerHTML = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+  //   <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>`
+  //   document.getElementById('messages_ul').appendChild(li)
+  // }
+
+
   </script>
 </head>
 <body>
@@ -100,6 +146,7 @@
 				</div>
 				<div id="expanded">
           <div id="bottom-bar">
+            <p id="timer"></p>
       			<button id="editprofile" onClick="parent.location='profile.html'"><i class="fas fa-user-edit" aria-hidden="true"></i> <span>Edit profile</span></button>
             <button id="chats" onClick="parent.location='chat_page.html'"><i class="fas fa-medal" aria-hidden="true"></i> <span>Chats</span></button>
             <button id="leaderboard" onClick="parent.location='leaderboard.html'"><i class="fas fa-medal" aria-hidden="true"></i> <span>Leaderboard</span></button>
@@ -111,7 +158,7 @@
 			</div>
 		</div>
 		<div id="contacts">
-			<ul style="display: initial">
+			<ul id="chats_ul" style="display: initial">
 				<li class="contact">
 					<div class="wrap">
 						<span class="contact-status online"></span>
@@ -122,7 +169,7 @@
 						</div>
 					</div>
 				</li>
-				<li class="contact active">
+				<!-- <li class="contact active">
 					<div class="wrap">
 						<span class="contact-status busy"></span>
 						<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
@@ -211,7 +258,7 @@
 							<p class="preview"><span>You:</span> That's bullshit. This deal is solid.</p>
 						</div>
 					</div>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</div>
@@ -242,8 +289,8 @@
     </div>
 		</div>
 		<div class="messages">
-			<ul>
-				<li class="sent">
+			<ul id="messages_ul">
+				<!-- <li class="sent">
 					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
 					<p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
 				</li>
@@ -274,7 +321,7 @@
 				<li class="replies">
 					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
 					<p>Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		<div class="message-input">
@@ -284,5 +331,6 @@
 			<button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 			</div>
 		</div>
+    <script src="js/chat_js.js"></script>
 	</div>
 </div>

@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
