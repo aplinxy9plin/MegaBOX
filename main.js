@@ -58,28 +58,39 @@ vk_app.use(async (context, next) => {
 
 vk_app.on('message',(message) => {
     console.log(message);
+    mainWindow.webContents.executeJavaScript('users.push("'+message.text+'"); console.log(users);', true)
     // получить аналитику текста
+    var first_name = '',
+        last_name = '',
+        photo = '',
+        sex = '',
+        followers_count = '',
+        post_count = '',
+        friends_count = '';
     text_anal ({'documents': [{'id':'1','text': message.text}]});
     var user_id = message.peerId
     a.api.users.get({
       user_ids: user_id,
       fields: 'photo_100,followers_count,sex'
     }).then((res) => {
-      var first_name = res[0].first_name,
-          last_name = res[0].last_name,
-          photo = res[0].photo_100,
-          sex = res[0].sex,
-          followers_count = res[0].followers_count;
+      first_name = res[0].first_name;
+      last_name = res[0].last_name;
+      photo = res[0].photo_100;
+      sex = res[0].sex;
+      followers_count = res[0].followers_count;
       if(sex = 1){
         sex = "женский"
       }else{
         sex = "мужской"
       }
-      console.log(first_name + " " + last_name + " " + photo + " " + sex + " " + followers_count);
+      mainWindow.webContents.executeJavaScript('users.push("'+first_name+'" , "'+last_name+'", "'+photo+'", "'+sex+'", "'+followers_count+'"); console.log(users);', true)
+      // console.log(first_name + " " + last_name + " " + photo + " " + sex + " " + followers_count);
     })
     a.api.wall.get({
       owner_id: user_id
     }).then((items) => {
+        post_count = items.count
+        mainWindow.webContents.executeJavaScript('users.push("'+post_count+'"); console.log(users);', true)
         console.log('Записей на стене:',items.count);
     }).catch((error) => {
         console.error(error);
@@ -87,8 +98,27 @@ vk_app.on('message',(message) => {
     a.api.friends.get({
       user_id: user_id
     }).then((res) => {
+      friends_count = res.count
+      mainWindow.webContents.executeJavaScript('users.push("'+friends_count+'", "'+user_id+'"); console.log(users); createChat(users[1],users[2],users[3],users[0], users[8]);', true)
       console.log('Количество друзей: ' + res.count);
     })
+    // var json = {
+    //   "type": "vk",
+    //   "profile":{
+    //     "user_id": user_id,
+    //     "first_name": first_name,
+    //     "last_name": last_name,
+    //     "sex": sex,
+    //     "photo": photo,
+    //     "followers_count": followers_count,
+    //     "post_count": post_count,
+    //     "friends_count": friends_count
+    //   },
+    //   "message":{
+    //     "text": message.text
+    //   }
+    // }
+    // mainWindow.webContents.executeJavaScript('var json = '+json)
 });
 
 async function run() {
@@ -154,7 +184,7 @@ function createWindow () {
        height: 600,
        width: 800,
        minHeight: 610,
-       minWidth: 736
+       minWidth: 900
      })
   // and load the index.html of the app.
   mainWindow.loadFile('login_page.html')
@@ -208,19 +238,19 @@ app.on('ready', createWindow)
 app.on('ready', () => {
   globalShortcut.register('CommandOrControl+1', () => {
     console.log('CommandOrControl+1 is pressed')
-    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+    mainWindow.webContents.executeJavaScript(`document.getElementById('write_message').value = 'Привет, мой дорогой друг'`)
   })
   globalShortcut.register('CommandOrControl+2', () => {
     console.log('CommandOrControl+1 is pressed')
-    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+    mainWindow.webContents.executeJavaScript(`document.getElementById('write_message').value = 'Привет, мой дорогой друг'`)
   })
   globalShortcut.register('CommandOrControl+3', () => {
     console.log('CommandOrControl+1 is pressed')
-    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+    mainWindow.webContents.executeJavaScript(`document.getElementById('write_message').value = 'Привет, мой дорогой друг'`)
   })
   globalShortcut.register('CommandOrControl+4', () => {
     console.log('CommandOrControl+1 is pressed')
-    mainWindow.webContents.webContents.executeJavaScript(`document.getElementsByTagName('input')[4].value = 'Привет, мой дорогой друг'`)
+    mainWindow.webContents.executeJavaScript(`document.getElementById('write_message').value = 'Привет, мой дорогой друг'`)
   })
 })
 
