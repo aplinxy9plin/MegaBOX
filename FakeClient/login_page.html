@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>MegaHackathon NSK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Insert this line above script imports  -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<script text="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+
+
+  <script text="text/javascript">
+  $(document).ready(function () {
+  $('.message a').click(function(){
+     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");});
+
+     $('#create').on('click', function () {
+         window.location ="chat_page.html"
+     });
+
+  $('#login').on('click', function () {
+    window.location.href = 'chat_page.html';
+  });
+
+  $('#file_uploader_image').on('click', function () {
+  $('#file_uploader_selector').click();
+
+});
+  $('file_uploader_selector').on('change', function() {
+    var file = document.getElementById("getval").files[0];
+   var reader = new FileReader();
+   reader.onloaded = function(){
+      document.getElementById('file_uploader_image').style.backgroundImage = "url(" + reader.result + ")";
+   }
+   if(file){
+      reader.readAsDataURL(file);
+    }else{
+    }
+});
+
+function login(){
+
+  /*var value1="";
+  var value2="";
+  var value3="";
+  var value4="";
+  var queryString = "?name=" + value1 + "&password=" + value2 + "&login=" + value2 + "&image=" + value2;*/
+  window.open = "chat_page.html";
+}
+});
+  </script>
+</head>
+<body>
+  <div class="login-page">
+  <div class="form">
+    <form action="chat_page.html" class="register-form">
+      <input id="file_uploader_selector" type="file" accept="image/*"/>
+      <img id="file_uploader_image" src="images/user.svg" class="round-button" alt="">
+      <input type="text" placeholder="name"/>
+      <input type="text" placeholder="surname"/>
+      <input type="password" placeholder="password"/>
+      <input type="text" placeholder="email address"/>
+      <button id="create" onclick="login()">create</button>
+      <p class="message">Already registered? <a href="#">Sign In</a></p>
+    </form>
+    <form action="chat_page.html" class="login-form">
+      <input type="text" placeholder="username"/>
+      <input type="password" placeholder="password"/>
+      <button id="login" onclick="login()">login</button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form>
+  </div>
+</div>
+</body></html>

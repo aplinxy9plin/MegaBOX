@@ -1,0 +1,29 @@
+{
+  "type": "vk",
+  "profile":{
+    "user_id": 2281337,
+    "first_name": "Nikita",
+    "last_name": "Aplin",
+    "sex": "мужской",
+    "photo": "https://adfadf",
+    "followers_count": 123,
+    "post_count": 12,
+    "friends_count": 78
+  },
+  "message":{
+    "text": "ky kaif"
+  }
+}
+
+{
+  "type": "tg",
+  "profile":{
+    "id": 83856998,
+    "first_name": "Nikita",
+    "last_name": "Aplin",
+    "username": "aplinxy9plin"
+  },
+  "message":{
+    "text": "asdaf"
+  }
+}

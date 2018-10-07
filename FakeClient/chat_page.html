@@ -99,7 +99,7 @@
 });
   function createChat(score, type, first_name, last_name, photo, message, user_id){
     // var count += 1;
-    if(score > 0.5){
+    if(score < 0.5){
       if(type == "vk"){
         user_id = user_id
         var li = document.createElement('li')

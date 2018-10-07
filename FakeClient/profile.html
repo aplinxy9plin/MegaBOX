@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>MegaHackathon NSK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chat_styles.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+  <!-- Insert this line above script imports  -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<script text="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+
+
+  <script text="text/javascript">
+  $(document).ready(function () {
+    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+    $("#profile-img").click(function() {
+    	$("#status-options").toggleClass("active");
+    });
+
+    $("#profile").toggleClass("expanded");
+    $("#contacts").toggleClass("expanded");
+
+
+    $("#status-options ul li").click(function() {
+    	$("#profile-img").removeClass();
+    	$("#status-online").removeClass("active");
+    	$("#status-away").removeClass("active");
+    	$("#status-busy").removeClass("active");
+    	$("#status-offline").removeClass("active");
+    	$(this).addClass("active");
+
+    	if($("#status-online").hasClass("active")) {
+    		$("#profile-img").addClass("online");
+    	} else if ($("#status-away").hasClass("active")) {
+    		$("#profile-img").addClass("away");
+    	} else if ($("#status-busy").hasClass("active")) {
+    		$("#profile-img").addClass("busy");
+    	} else if ($("#status-offline").hasClass("active")) {
+    		$("#profile-img").addClass("offline");
+    	} else {
+    		$("#profile-img").removeClass();
+    	};
+
+    	$("#status-options").removeClass("active");
+    });
+
+    function newMessage() {
+    	message = $(".message-input input").val();
+    	if($.trim(message) == '') {
+    		return false;
+    	}
+    	$('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+    	$('.message-input input').val(null);
+    	$('.contact.active .preview').html('<span>You: </span>' + message);
+    	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    };
+
+    $('.submit').click(function() {
+      newMessage();
+    });
+
+    $(window).on('keydown', function(e) {
+      if (e.which == 13) {
+        newMessage();
+        return false;
+      }
+    });
+
+});
+  </script>
+</head>
+<body>
+
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				<img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+				<p>Mike Ross</p>
+				<div id="status-options">
+					<ul>
+						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+						<li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+						<li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+						<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+					</ul>
+				</div>
+				<div id="expanded">
+          <div id="bottom-bar">
+            <button id="editprofile" onClick="parent.location='profile.html'"><i class="fas fa-pencil" aria-hidden="true"></i> <span>Edit profile</span></button>
+            <button id="chats" onClick="parent.location='chat_page.html'"><i class="fas fa-comments" aria-hidden="true"></i> <span>Chats</span></button>
+            <button id="leaderboard" onClick="parent.location='leaderboard.html'"><i class="fas fa-trophy" aria-hidden="true"></i> <span>Leaderboard</span></button>
+            <button id="personage" onClick="parent.location='personage.html'"><i class="fa fa-star fa-fw" aria-hidden="true"></i> <span>Personage</span></button>
+            <button id="settings" onClick="parent.location='settings.html'"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+            <button id="logout" onClick="parent.location='login_page.html'"><i class="fas fa-sign-out" aria-hidden="true"></i> <span>Logout</span></button></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="content" id="content">
+    <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="profile-holder">
+        <div class="profile-people-holder">
+          <div class="profile-name">
+            <h3>Profile settings</h3>
+            <p>Update your profile password and notifications settings</p>
+          </div>
+        </div>
+        <div class="profile-settings-holder">
+
+          <div class="form-group clearfix">
+            <div class="col-sm-12 control-label">
+              <label for="profile_password">Change username</label>
+            </div>
+            <div class="col-sm-12">
+              <input type="text" style="width:250px;margin-bottom:29px;margin-top:10px;" class="form-control" id="profile_password" name="Change login" placeholder="Enter password to update it">
+            </div>
+          </div>
+          <div class="form-group clearfix">
+            <div class="col-sm-12 control-label">
+              <label for="profile_password">Change e-mail</label>
+            </div>
+            <div class="col-sm-12">
+              <input type="text" style="width:250px;margin-top:10px;margin-bottom:20px;" class="form-control" id="profile_password_confirm" name="Change e-mail" placeholder="Enter e-mail">
+            </div>
+          </div>
+
+            <div class="form-group clearfix">
+              <div class="col-sm-12 control-label">
+                <label for="profile_password">Change password</label>
+                <span class="text-helper">Only enter a password if you want to change it</span>
+              </div>
+              <div class="col-sm-12">
+                <input type="password" style="width:250px;margin-bottom:29px;margin-top:10px;" class="form-control" id="profile_password" name="Change password" placeholder="Enter password to update it">
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-sm-12">
+                <input type="password" style="width:250px;" class="form-control" id="profile_password_confirm" name="Confirm password" placeholder="Re-enter password to confirm">
+              </div>
+            </div>
+          </form>
+          <div class="form-btns clearfix">
+            <div class="btn btn-primary">Save changes</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+</div>
