@@ -9,6 +9,7 @@
   <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/104946/animate.min.css'>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/chat_styles.css">
+  <link rel="stylesheet" href="css/personage.css">
   <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
   <!-- Insert this line above script imports  -->
@@ -21,6 +22,18 @@
 
 
   <script text="text/javascript">
+  (function() {
+    $(function() {
+      return $('[data-toggle]').on('click', function() {
+        var toggle;
+        toggle = $(this).addClass('active').attr('data-toggle');
+        $(this).siblings('[data-toggle]').removeClass('active');
+        return $('.surveys').removeClass('grid list').addClass(toggle);
+      });
+    });
+
+  }).call(this);
+
   $(document).ready(function () {
     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
@@ -78,6 +91,183 @@
     });
 
 });
+
+$(document).ready(function(){
+
+	// Variables
+	var clickedTab = $(".tabs > .active");
+	var tabWrapper = $(".tab__content");
+	var activeTab = tabWrapper.find(".active");
+	var activeTabHeight = activeTab.outerHeight();
+
+	// Show tab on page load
+	activeTab.show();
+
+	// Set height of wrapper on page load
+	tabWrapper.height(activeTabHeight);
+
+	$(".tabs > li").on("click", function() {
+
+		// Remove class from active tab
+		$(".tabs > li").removeClass("active");
+
+		// Add class active to clicked tab
+		$(this).addClass("active");
+
+		// Update clickedTab variable
+		clickedTab = $(".tabs .active");
+
+		// fade out active tab
+		activeTab.fadeOut(250, function() {
+
+			// Remove active class all tabs
+			$(".tab__content > li").removeClass("active");
+
+			// Get index of clicked tab
+			var clickedTabIndex = clickedTab.index();
+
+			// Add class active to corresponding tab
+			$(".tab__content > li").eq(clickedTabIndex).addClass("active");
+
+			// update new active tab
+			activeTab = $(".tab__content > .active");
+
+			// Update variable
+			activeTabHeight = activeTab.outerHeight();
+
+			// Animate height of wrapper to new tab height
+			tabWrapper.stop().delay(50).animate({
+				height: activeTabHeight
+			}, 500, function() {
+
+				// Fade in active tab
+				activeTab.delay(50).fadeIn(250);
+
+			});
+		});
+	});
+
+	// Variables
+	var colorButton = $(".colors li");
+
+	colorButton.on("click", function(){
+
+		// Remove class from currently active button
+		$(".colors > li").removeClass("active-color");
+
+		// Add class active to clicked button
+		$(this).addClass("active-color");
+
+		// Get background color of clicked
+		var newColor = $(this).attr("data-color");
+
+		// Change background of everything with class .bg-color
+		$(".bg-color").css("background-color", newColor);
+
+		// Change color of everything with class .text-color
+		$(".text-color").css("color", newColor);
+	});
+});
+$(document).ready(function() {
+var card = {};
+
+card.wrap = document.querySelector('.cards');
+card.new = document.querySelector('.new-card');
+
+card.wrap.addEventListener('click', function (e) {
+  if (e.target.classList.contains('card__title')) {
+    var parentCard = e.target.parentElement;
+    var isActive = parentCard.classList.contains('is-active');
+    var activedItem = card.wrap.querySelector('.card.is-active');
+
+    if (!isActive && !!activedItem) {
+      activedItem.classList.toggle('is-active');
+    }
+    parentCard.classList.toggle('is-active');
+    card.wrap.classList.toggle('is-active', !isActive);
+  }
+});
+
+card.new.addEventListener('click', function () {
+  var lastCard = card.wrap.querySelector('.card:last-child');
+  var lastNumber = +lastCard.className.match(/\d+/);
+  var newCard = lastCard.cloneNode(true);
+  newCard.className = newCard.className.replace(/\d+/, lastNumber + 1);
+  newCard.classList.remove('is-active');
+
+  lastCard.parentElement.insertBefore(newCard, lastCard.nextSibling);
+
+  reCalcPos();
+});
+
+var reCalcPos = function reCalcPos() {
+  var cards = [].slice.call(card.wrap.querySelectorAll('.card'));
+  var count = cards.length;
+
+  cards.forEach(function (card, i) {
+    card.style.transform = 'translateY(calc(' + i / count + ' * (100% - 1.5rem)))';
+  });
+};
+
+
+  $('.add-to-cart, .remove-from-cart').on('click', function() {
+    $(this).parents('.flipable').toggleClass('flipped product-added');
+    if ($('.product-added').length > 0){
+      $('body').addClass('enable-checkout');
+    }else{
+      $('body').removeClass('enable-checkout');
+    }
+  });
+  $('.btn-checkout').on('click', function() {
+    $('body').toggleClass('open-checkout');
+  });
+
+  var card = new card({
+    // a selector or DOM element for the form where users will
+    // be entering their information
+    form: '.form-container.active', // *required*
+    // a selector or DOM element for the container
+    // where you want the card to appear
+    container: '.card-wrapper', // *required*
+
+
+    //width: 200, // optional — default 350px
+    formatting: true, // optional - default true
+
+    // Strings for translation - optional
+    messages: {
+      validDate: 'valid\ndate', // optional - default 'valid\nthru'
+      monthYear: 'mm/yyyy', // optional - default 'month/year'
+    },
+
+    // Default placeholders for rendered fields - optional
+    placeholders: {
+      number: '•••• •••• •••• ••••',
+      name: 'Full Name',
+      expiry: '••/••',
+      cvc: '•••'
+    },
+
+    // if true, will log helpful messages for setting up Card
+    debug: true // optional - default false
+  });
+
+})
+
+
+function demo(){
+  setTimeout(function(){
+    $('.add-to-cart:eq(0)').click();
+    setTimeout(function(){
+      $('.add-to-cart:eq(1)').click();
+      setTimeout(function(){
+        $('.btn-checkout').click()
+      }, 500);
+    }, 500);
+  }, 1500);
+}
+
+
   </script>
 </head>
 <body>
@@ -98,17 +288,460 @@
 				</div>
 				<div id="expanded">
           <div id="bottom-bar">
-      			<button id="editprofile" onClick="parent.location='profile.html'"><i class="fas fa-user-edit fa-fw" aria-hidden="true"></i> <span>Edit profile</span></button>
-            <button id="chats" onClick="parent.location='chat_page.html'"><i class="fas fa-medal fa-fw" aria-hidden="true"></i> <span>Chats</span></button>
-            <button id="leaderboard" onClick="parent.location='leaderboard.html'"><i class="fas fa-medal fa-fw" aria-hidden="true"></i> <span>Leaderboard</span></button>
+      			<button id="editprofile" onClick="parent.location='profile.html'"><i class="fas fa-pencil" aria-hidden="true"></i> <span>Edit profile</span></button>
+            <button id="chats" onClick="parent.location='chat_page.html'"><i class="fas fa-comments" aria-hidden="true"></i> <span>Chats</span></button>
+            <button id="leaderboard" onClick="parent.location='leaderboard.html'"><i class="fas fa-trophy" aria-hidden="true"></i> <span>Leaderboard</span></button>
       			<button id="personage" onClick="parent.location='personage.html'"><i class="fa fa-star fa-fw" aria-hidden="true"></i> <span>Personage</span></button>
       			<button id="settings" onClick="parent.location='settings.html'"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
-            <button id="logout" onClick="parent.location='login_page.html'"><i class="fa fa-sign-out-alt fa-fw" aria-hidden="true"></i> <span>Logout</span></button>
+            <button id="logout" onClick="parent.location='login_page.html'"><i class="fas fa-sign-out" aria-hidden="true"></i> <span>Logout</span></button>
       		</div>
 				</div>
 			</div>
 		</div>
 
 	</div>
-	<div class="content" id="content"></div>
+	<div class="content" id="content">
+    <nav class="bg-color">
+      <img src="images/darth_vader.png">
+    </nav>
+
+    <section class="wrapper_r">
+    	<ul class="tabs bg-color">
+    		<li class="active">Themes</li>
+    		<li>Roadmap</li>
+    		<li>Games</li>
+        <li>Personage  Customization</li>
+    	</ul>
+
+    	<ul class="tab__content">
+    		<li class="active">
+    			<div class="content__wrapper">
+    				<h2 class="text-color">Choose a color theme</h2>
+
+    				<ul class="colors">
+    					<li data-color="#2ecc71"></li>
+    					<li data-color="#D64A4B"></li>
+    					<li data-color="#8e44ad"></li>
+    					<li class="active-color" data-color="#46a1de"></li>
+    					<li data-color="#bdc3c7"></li>
+    				</ul>
+    			</div>
+    		</li>
+    		<li>
+    			<div class="content__wrapper">
+
+<h1 class="intro">
+
+</h1>
+<div class="box">
+  <div class="cards">
+    <div class="card card--1">
+      <h2 class="card__title"></h2>
+      <svg viewBox="0 0 0 0" style="position: absolute; z-index: -1; opacity: 0;">
+  <defs>
+    <linearGradient id="boxGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="25" y2="25">
+      <stop offset="0%"   stop-color="#27FDC7"/>
+      <stop offset="100%" stop-color="#0FC0F5"/>
+    </linearGradient>
+
+    <linearGradient id="lineGradient">
+      <stop offset="0%"    stop-color="#0FC0F5"/>
+      <stop offset="100%"  stop-color="#27FDC7"/>
+    </linearGradient>
+
+    <path id="todo__line" stroke="url(#lineGradient)" d="M21 12.3h168v0.1z"></path>
+    <path id="todo__box" stroke="url(#boxGradient)" d="M21 12.7v5c0 1.3-1 2.3-2.3 2.3H8.3C7 20 6 19 6 17.7V7.3C6 6 7 5 8.3 5h10.4C20 5 21 6 21 7.3v5.4"></path>
+    <path id="todo__check" stroke="url(#boxGradient)" d="M10 13l2 2 5-5"></path>
+    <circle id="todo__circle" cx="13.5" cy="12.5" r="10"></circle>
+  </defs>
+</svg>
+
+
+<div class="todo-list">
+  <label class="todo">
+    <input class="todo__state" type="checkbox" />
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+      <use xlink:href="#todo__line" class="todo__line"></use>
+      <use xlink:href="#todo__box" class="todo__box"></use>
+      <use xlink:href="#todo__check" class="todo__check"></use>
+      <use xlink:href="#todo__circle" class="todo__circle"></use>
+    </svg>
+
+    <div class="todo__text">Do a very important task</div>
+
+  </label>
+
+  <label class="todo">
+
+    <input class="todo__state" type="checkbox" />
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+      <use xlink:href="#todo__line" class="todo__line"></use>
+      <use xlink:href="#todo__box" class="todo__box"></use>
+      <use xlink:href="#todo__check" class="todo__check"></use>
+      <use xlink:href="#todo__circle" class="todo__circle"></use>
+    </svg>
+
+    <div class="todo__text">Another important task</div>
+
+  </label>
+
+  <label class="todo">
+    <input class="todo__state" type="checkbox" />
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+      <use xlink:href="#todo__line" class="todo__line"></use>
+      <use xlink:href="#todo__box" class="todo__box"></use>
+      <use xlink:href="#todo__check" class="todo__check"></use>
+      <use xlink:href="#todo__circle" class="todo__circle"></use>
+    </svg>
+
+    <div class="todo__text">Not so important task</div>
+  </label>
 </div>
+    </div>
+    <div class="card card--2">
+      <h2 class="card__title"></h2>
+      <div class="todo-list">
+        <label class="todo">
+          <input class="todo__state" type="checkbox" />
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+            <use xlink:href="#todo__line" class="todo__line"></use>
+            <use xlink:href="#todo__box" class="todo__box"></use>
+            <use xlink:href="#todo__check" class="todo__check"></use>
+            <use xlink:href="#todo__circle" class="todo__circle"></use>
+          </svg>
+
+          <div class="todo__text">Do a very important task</div>
+
+        </label>
+
+        <label class="todo">
+
+          <input class="todo__state" type="checkbox" />
+
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+            <use xlink:href="#todo__line" class="todo__line"></use>
+            <use xlink:href="#todo__box" class="todo__box"></use>
+            <use xlink:href="#todo__check" class="todo__check"></use>
+            <use xlink:href="#todo__circle" class="todo__circle"></use>
+          </svg>
+
+          <div class="todo__text">Another important task</div>
+
+        </label>
+
+        <label class="todo">
+          <input class="todo__state" type="checkbox" />
+
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+            <use xlink:href="#todo__line" class="todo__line"></use>
+            <use xlink:href="#todo__box" class="todo__box"></use>
+            <use xlink:href="#todo__check" class="todo__check"></use>
+            <use xlink:href="#todo__circle" class="todo__circle"></use>
+          </svg>
+
+          <div class="todo__text">Not so important task</div>
+        </label>
+      </div>
+
+      </dl>
+    </div>
+    <div class="card card--3">
+      <h2 class="card__title"></h2>
+      <svg viewBox="0 0 0 0" style="position: absolute; z-index: -1; opacity: 0;">
+  <defs>
+    <linearGradient id="boxGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="25" y2="25">
+      <stop offset="0%"   stop-color="#27FDC7"/>
+      <stop offset="100%" stop-color="#0FC0F5"/>
+    </linearGradient>
+
+    <linearGradient id="lineGradient">
+      <stop offset="0%"    stop-color="#0FC0F5"/>
+      <stop offset="100%"  stop-color="#27FDC7"/>
+    </linearGradient>
+
+    <path id="todo__line" stroke="url(#lineGradient)" d="M21 12.3h168v0.1z"></path>
+    <path id="todo__box" stroke="url(#boxGradient)" d="M21 12.7v5c0 1.3-1 2.3-2.3 2.3H8.3C7 20 6 19 6 17.7V7.3C6 6 7 5 8.3 5h10.4C20 5 21 6 21 7.3v5.4"></path>
+    <path id="todo__check" stroke="url(#boxGradient)" d="M10 13l2 2 5-5"></path>
+    <circle id="todo__circle" cx="13.5" cy="12.5" r="10"></circle>
+  </defs>
+</svg>
+
+
+<div class="todo-list">
+  <label class="todo">
+    <input class="todo__state" type="checkbox" />
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+      <use xlink:href="#todo__line" class="todo__line"></use>
+      <use xlink:href="#todo__box" class="todo__box"></use>
+      <use xlink:href="#todo__check" class="todo__check"></use>
+      <use xlink:href="#todo__circle" class="todo__circle"></use>
+    </svg>
+
+    <div class="todo__text">Do a very important task</div>
+
+  </label>
+
+  <label class="todo">
+
+    <input class="todo__state" type="checkbox" />
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+      <use xlink:href="#todo__line" class="todo__line"></use>
+      <use xlink:href="#todo__box" class="todo__box"></use>
+      <use xlink:href="#todo__check" class="todo__check"></use>
+      <use xlink:href="#todo__circle" class="todo__circle"></use>
+    </svg>
+
+    <div class="todo__text">Another important task</div>
+
+  </label>
+
+  <label class="todo">
+    <input class="todo__state" type="checkbox" />
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="todo__icon">
+      <use xlink:href="#todo__line" class="todo__line"></use>
+      <use xlink:href="#todo__box" class="todo__box"></use>
+      <use xlink:href="#todo__check" class="todo__check"></use>
+      <use xlink:href="#todo__circle" class="todo__circle"></use>
+    </svg>
+
+    <div class="todo__text">Not so important task</div>
+  </label>
+</div>
+    </div>
+    <div class="card card--4">
+      <h2 class="card__title"></h2>
+      <dl class="schedules">
+        <dt class="schedules__time">06:00</dt>
+        <dd class="schedules__info">
+          <p><span>Lorem ipsum dolor sit amet amet amet amet.</span></p>
+        </dd>
+        <dd class="schedules__info">
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+        <dt class="schedules__time">12:00</dt>
+        <dd class="schedules__info">
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+        <dt class="schedules__time">15:00</dt>
+        <dd class="schedules__info">
+          <p><img src="https://maps.googleapis.com/maps/api/staticmap?center=高雄火車站&amp;zoom=16&amp;scale=false&amp;size=400x120&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7C#{item.map}" width="400" height="120" alt="Google Map of 高雄火車站"/></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+        <dt class="schedules__time">18:00</dt>
+        <dd class="schedules__info">
+          <p><img src="https://maps.googleapis.com/maps/api/staticmap?center=墾丁&amp;zoom=16&amp;scale=false&amp;size=400x120&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7C#{item.map}" width="400" height="120" alt="Google Map of 墾丁"/></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+      </dl>
+    </div>
+    <div class="card card--5">
+      <h2 class="card__title"></h2>
+      <dl class="schedules">
+        <dt class="schedules__time">06:00</dt>
+        <dd class="schedules__info">
+          <p><span>Lorem ipsum dolor sit amet amet amet amet.</span></p>
+        </dd>
+        <dt class="schedules__time">08:00</dt>
+        <dd class="schedules__info">
+          <p><img src="https://maps.googleapis.com/maps/api/staticmap?center=台北火車站&amp;zoom=16&amp;scale=false&amp;size=400x120&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7C#{item.map}" width="400" height="120" alt="Google Map of 台北火車站"/></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+        <dt class="schedules__time">12:00</dt>
+        <dd class="schedules__info">
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+        <dt class="schedules__time">15:00</dt>
+        <dd class="schedules__info">
+          <p><img src="https://maps.googleapis.com/maps/api/staticmap?center=高雄火車站&amp;zoom=16&amp;scale=false&amp;size=400x120&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7C#{item.map}" width="400" height="120" alt="Google Map of 高雄火車站"/></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+        <dt class="schedules__time">18:00</dt>
+        <dd class="schedules__info">
+          <p><img src="https://maps.googleapis.com/maps/api/staticmap?center=墾丁&amp;zoom=16&amp;scale=false&amp;size=400x120&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7C#{item.map}" width="400" height="120" alt="Google Map of 墾丁"/></p>
+          <p><span>Lorem ipsum dolor sit amet.</span></p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <button class="new-card">new day</button>
+</div></div>
+    		</li>
+    		<li>
+    			<div class="content__wrapper">
+            <span class="toggler active" data-toggle="grid"><span class="entypo-layout"></span></span>
+<span class="toggler" data-toggle="list"><span class="entypo-list"></span></span>
+
+<ul class="surveys grid">
+  <li class="survey-item">
+
+    <span class="survey-country list-only">
+      COX
+    </span>
+
+    <span class="survey-name">
+      Asset Management
+    </span>
+
+    <span class="survey-country grid-only">
+      COX
+    </span>
+
+    <div class="pull-right">
+
+      <span class="survey-progress">
+        <span class="survey-progress-bg">
+          <span class="survey-progress-fg" style="width: 88%;"></span>
+        </span>
+
+        <span class="survey-progress-labels">
+          <span class="survey-progress-label">
+            88%
+          </span>
+
+          <span class="survey-completes">
+            24 / 30 Days
+          </span>
+        </span>
+      </span>
+
+       <span class="survey-end-date ended">
+        2014 - May 10
+      </span>
+      <span class="survey-stage">
+        <span class="stage draft">Draft</span>
+        <span class="stage awarded">Awarded</span>
+        <span class="stage live">Live</span>
+        <span class="stage ended active">Ended</span>
+      </span>
+    </div>
+  </li>
+  <li class="survey-item">
+    <span class="survey-country list-only">
+      Reliance
+    </span>
+
+    <span class="survey-name">
+      Netvelocity
+    </span>
+
+    <span class="survey-country grid-only">
+      Reliance
+    </span>
+
+    <div class="pull-right">
+
+      <span class="survey-progress">
+        <span class="survey-progress-bg">
+          <span class="survey-progress-fg" style="width: 25%;"></span>
+        </span>
+
+        <span class="survey-progress-labels">
+          <span class="survey-progress-label">
+            25%
+          </span>
+
+          <span class="survey-completes">
+            1 / 7 Days
+          </span>
+        </span>
+      </span>
+
+       <span class="survey-end-date">
+        2014 - July 12
+      </span>
+      <span class="survey-stage">
+        <span class="stage draft">Draft</span>
+        <span class="stage awarded">Awarded</span>
+        <span class="stage live active">Live</span>
+        <span class="stage ended">Ended</span>
+      </span>
+    </div>
+  </li>
+  <li class="survey-item">
+    <span class="survey-country list-only">
+      BTC
+    </span>
+
+    <span class="survey-name">
+      Loyalty Management
+    </span>
+
+    <span class="survey-country grid-only">
+      BTC
+    </span>
+
+    <div class="pull-right">
+      <span class="survey-end-date">
+        2014 - Oct 1
+      </span>
+      <span class="survey-stage">
+        <span class="stage draft">Draft</span>
+        <span class="stage awarded active">Awarded</span>
+        <span class="stage live">Live</span>
+        <span class="stage ended">Ended</span>
+      </span>
+    </div>
+  </li>
+</ul>
+          </div>
+    		</li>
+        <li>
+    			<div class="content__wrapper">
+
+            	<section class="the-demo">
+            		<div class="example-item">
+            			<div class="lightsaber">
+            				<label for="yoda-example"></label>
+            				<input type="checkbox" id="yoda-example" checked="checked">
+            				<div class="switch"></div>
+            				<div class="plasma yoda"></div>
+            			</div>
+            			<h3>Yoda</h3>
+            		</div>
+            		<div class="example-item">
+            			<div class="lightsaber">
+            				<label for="darth-vader-example"></label>
+            				<input type="checkbox" id="darth-vader-example" checked="checked">
+            				<div class="switch"></div>
+            				<div class="plasma vader"></div>
+            			</div>
+            			<h3>Vader</h3>
+            		</div>
+            		<div class="example-item">
+            			<div class="lightsaber">
+            				<label for="windu-example"></label>
+            				<input type="checkbox" id="windu-example">
+            				<div class="switch"></div>
+            				<div class="plasma windu"></div>
+            			</div>
+            			<h3>Windu</h3>
+            		</div>
+            		<div class="example-item clearfix">
+            			<div class="lightsaber">
+            				<label for="obi-wan-example"></label>
+            				<input type="checkbox" id="obi-wan-example">
+            				<div class="switch"></div>
+            				<div class="plasma obi-wan"></div>
+            			</div>
+            			<h3>Obi</h3>
+            		</div>
+
+            	</section>
+
+            </div>
+    		</li>
+    	</ul>
+    </section>
+
+</div></body></html>

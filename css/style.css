@@ -290,7 +290,7 @@
   font-family: "FontAwesome", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #00b956;
+  background: #32465a;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -309,7 +309,7 @@
   font-size: 12px;
 }
 .form .message a {
-  color: #00b956;
+  color: #32465a;
   text-decoration: none;
 }
 .form .register-form {
@@ -349,11 +349,11 @@
   color: #EF3B3A;
 }
 body {
-  background: #00b956; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #00b956, #8DC26F);
-  background: -moz-linear-gradient(right, #00b956, #8DC26F);
-  background: -o-linear-gradient(right, #00b956, #8DC26F);
-  background: linear-gradient(to left, #00b956, #8DC26F);
+  background: #32465a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #32465a, #32465a);
+  background: -moz-linear-gradient(right, #32465a, #32465a);
+  background: -o-linear-gradient(right, #32465a, #32465a);
+  background: linear-gradient(to left, #32465a, #32465a);
   font-family: "FontAwesome", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -73,7 +73,7 @@ h2.sub.header {
 
 .avatar {
   display: inline-block;
-  background-image: url("http://radfaces.com/images/avatars/alex-murphy.jpg");
+  background-image: url("../images/darth_vader.png");
   background-size: cover;
   border-radius: 50%;
   height: 75px;
